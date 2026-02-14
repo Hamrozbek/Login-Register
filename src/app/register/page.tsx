@@ -1,15 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-import Link from "next/link";
+
+// react icons 
+import { FiEye, FiEyeOff, FiMail, FiUser } from "react-icons/fi";
 
 export default function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+
+    // button eye icon 
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,26 +36,45 @@ export default function Register() {
                     <p className="text-gray-300 mt-2">Create Account</p>
                 </div>
                 <form className="flex flex-col gap-6" onSubmit={handleRegister}>
-                    <input type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                        className="bg-transparent focus:bg-transparent border-b border-cyan-400 py-2 px-4 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
-                    />
+                    <div className="relative">
+                        <FiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-400" />
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            className="w-full bg-transparent border-b border-cyan-400 py-2 pl-4 pr-12 rounded-full focus:outline-none placeholder-gray-400"
+                        />
+                    </div>
 
-                    <input type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        className="bg-transparent focus:bg-transparent border-b border-cyan-400 py-2 px-4 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
-                    />
+                    <div className="relative">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            className="w-full bg-transparent border-b border-cyan-400 py-2 pl-4 pr-12 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
+                        />
+                        <FiMail className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-400 pointer-events-none" />
+                    </div>
 
-                    <input type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        className="bg-transparent focus:bg-transparent border-b border-cyan-400 py-2 px-4 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
-                    />
+                    <div className="relative">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            className="w-full bg-transparent border-b border-cyan-400 py-2 pl-4 pr-12 rounded-full focus:outline-none placeholder-gray-400"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-400"
+                        >
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </button>
+                    </div>
 
                     <button
                         type="submit"

@@ -1,15 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-import Link from "next/link";
+
+// react icons 
+import { FiEye, FiEyeOff, FiUser } from "react-icons/fi";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [remember, setRemember] = useState(false);
+
+    // button eye icon 
+    const [showPassword, setShowPassword] = useState(false);
+
     const router = useRouter();
+
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,6 +39,7 @@ export default function Login() {
         } else {
             toast.error("Invalid username or password!");
         }
+
     };
 
     return (
@@ -42,20 +51,33 @@ export default function Login() {
                     <p className="text-gray-300 mt-2">Welcome Back</p>
                 </div>
                 <form className="flex flex-col gap-6" onSubmit={handleLogin}>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                        className="bg-transparent focus:bg-transparent border-b border-cyan-400 py-2 px-4 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        className="bg-transparent focus:bg-transparent border-b border-cyan-400 py-2 px-4 rounded-full focus:outline-none placeholder-gray-400 sm:text-sm md:text-base"
-                    />
+                    <div className="relative">
+                        <FiUser className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-400" />
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            className="w-full bg-transparent border-b border-cyan-400 py-2 pl-4 pr-12 rounded-full focus:outline-none placeholder-gray-400"
+                        />
+                    </div>
+                    <div className="relative">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            className="w-full bg-transparent border-b border-cyan-400 py-2 pl-4 pr-12 rounded-full focus:outline-none placeholder-gray-400"
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-400"
+                        >
+                            {showPassword ? <FiEyeOff /> : <FiEye />}
+                        </button>
+                    </div>
 
                     <div className="flex items-center justify-between text-sm">
                         <label className="flex items-center gap-2 cursor-pointer">
